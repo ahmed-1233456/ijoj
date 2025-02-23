@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>موف</title>
+    <title>Mof</title>
     <link rel="icon" href="https://i.postimg.cc/zv6SWzxx/animal.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- إضافة خط Cairo من Google Fonts -->
+    <!-- Add Cairo font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* تطبيق خط Cairo على الصفحة بالكامل */
+        /* Apply Cairo font to the entire page */
         body {
             margin: 0;
             background-color: black;
@@ -26,13 +26,13 @@
             padding: 0;
         }
 
-        /* منع تكبير الصفحة */
+        /* Prevent zooming */
         * {
             touch-action: none;
             user-select: none;
         }
 
-        /* تطبيق خط Cairo على المشغل */
+        /* Apply Cairo font to the player */
         .jwplayer * {
             font-family: 'Cairo', sans-serif !important;
         }
@@ -74,7 +74,7 @@
             z-index: 1000;
         }
 
-        /* أنيميشن للظهور (fade in) */
+        /* Fade in animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -85,7 +85,7 @@
             }
         }
 
-        /* أنيميشن للاختفاء (fade out) */
+        /* Fade out animation */
         @keyframes fadeOut {
             from {
                 opacity: 1;
@@ -116,7 +116,7 @@
             opacity: 0;
         }
 
-        /* أنيميشن لتأثير fade in و fade out */
+        /* Fade in and out animation */
         @keyframes fadeInOut {
             0% {
                 opacity: 0;
@@ -131,18 +131,18 @@
             }
         }
 
-        /* تخصيص كلمة "Live" */
+        /* Customize "Live" text */
         .jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-text-live {
             animation: fadeInOut 3s infinite !important;
             color: red !important;
         }
 
-        /* لون الأيقونات */
+        /* Icon colors */
         .jw-icon {
             color: #3ADBBF !important;
         }
 
-        /* تنسيق القوائم */
+        /* Menu styling */
         .jw-settings-menu,
         .jw-menu {
             background-color: rgba(26, 29, 46, 0.9) !important;
@@ -162,38 +162,35 @@
             background-color: rgba(58, 219, 191, 0.1) !important;
         }
 
-        /* إخفاء أيقونات غير مرغوبة */
+        /* Hide unwanted icons */
         .jw-icon-pip,
         .jw-icon-fullscreen {
             display: none !important;
         }
 
-        /* شريط الصوت دائمًا أبيض */
+        /* Volume slider styling */
         .jw-slider-volume .jw-slider-container .jw-buffer {
             background-color: white !important;
         }
 
-        /* عند رفع الصوت (active)، يتم تغيير لون الجزء المملوء */
         .jw-slider-volume.jw-volume-active .jw-slider-container .jw-progress {
             background-color: #3ADBBF !important;
         }
 
-        /* المؤشر يبقى دائمًا 3ADBBF */
         .jw-slider-volume .jw-slider-container .jw-knob {
             background-color: #3ADBBF !important;
         }
 
-        /* تغيير لون الشريط المملوء في شريط التقدم */
+        /* Progress bar styling */
         .jw-slider-time .jw-slider-container .jw-timesegment-bar.jw-progress {
             background-color: #3ADBBF !important;
         }
 
-        /* تغيير لون المؤشر في شريط التقدم */
         .jw-slider-time .jw-slider-container .jw-knob {
             background-color: #3ADBBF !important;
         }
 
-        /* تغيير لون خلفية زر الترجمة مع شفافية وبلور */
+        /* Captions button styling */
         #jw-jwplayerDiv-settings-submenu-captions .jw-submenu-topbar .jw-settings-content-item {
             background-color: rgba(26, 29, 46, 0.9) !important;
             color: #3ADBBF !important;
@@ -201,13 +198,12 @@
             padding: 8px 12px;
         }
 
-        /* جعل النص باللون الأحمر */
+        /* Active item styling */
         .jw-settings-submenu-items .jw-settings-content-item.jw-settings-item-active {
             color: #FF0000 !important;
             position: relative;
         }
 
-        /* تغيير لون الدائرة وتحريكها لليمين */
         .jw-settings-submenu-items .jw-settings-content-item.jw-settings-item-active::before {
             content: '';
             background-color: #FF0000 !important;
@@ -221,24 +217,24 @@
             margin-left: 3px;
         }
 
-        /* تخصيص حجم الخط للعنوان */
+        /* Title font size */
         .jw-title {
             font-size: 14px !important;
         }
 
-        /* تخصيص حجم الخط للوصف */
+        /* Description font size */
         .jw-description {
             font-size: 18px !important;
         }
 
-        /* محاذاة النص العربي إلى اليمين */
+        /* Right-to-left text alignment */
         .jw-title[dir="rtl"],
         .jw-description[dir="rtl"] {
             direction: rtl;
             text-align: right;
         }
 
-        /* محاذاة النص الإنجليزي إلى اليسار */
+        /* Left-to-right text alignment */
         .jw-title[dir="ltr"],
         .jw-description[dir="ltr"] {
             direction: ltr;
@@ -252,33 +248,33 @@
 
         function setupPlayer(streamLink, keyId, key) {
             const jwplayerConfig = {
-                file: streamLink, // رابط البث المحمي بـ DRM
+                file: streamLink, // DRM-protected stream link
                 autostart: false,
                 width: "100%",
                 height: "100%",
-                type: "mpd", // استخدام DASH مع DRM
+                type: "mpd", // Use DASH with DRM
                 volume: 100,
                 mute: true,
                 pipIcon: false,
                 castIcon: false,
-                title: "موف",
+                title: "Mof",
                 displaytitle: true,
-                description: "هذا البث خاص بتطبيق موف",
+                description: "This stream is exclusive to the Mof app.",
                 displaydescription: true,
                 stretching: "exactfit",
                 drm: {
                     clearkey: {
                         keyId: keyId, // Key ID
-                        key: key // المفتاح
+                        key: key // Key
                     }
                 },
-                playbackRateControls: true, // تفعيل التحكم في السرعات
-                playbackRates: [0.5, 1, 1.5, 2] // تحديد السرعات المطلوبة
+                playbackRateControls: true, // Enable playback speed control
+                playbackRates: [0.5, 1, 1.5, 2] // Set available playback speeds
             };
 
             const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
 
-            // زر تغيير وضع العرض
+            // Button to change aspect ratio
             player.addButton(
                 "https://i.postimg.cc/yN9PVPGG/aspect-ratio.png",
                 "Change Aspect Ratio",
@@ -302,7 +298,7 @@
                 "stretchingButton"
             );
 
-            // تتبع تغييرات الصوت
+            // Track volume changes
             player.on('volume', function (event) {
                 const volumeSlider = document.querySelector('.jw-slider-volume');
                 if (event.volume > 0) {
@@ -312,7 +308,7 @@
                 }
             });
 
-            // التحكم في وضع الشاشة الكاملة
+            // Handle fullscreen mode
             player.on('fullscreen', function (event) {
                 const statusElement = document.getElementById("stretchingStatus");
                 statusElement.style.position = 'fixed';
@@ -324,23 +320,23 @@
 
         function showStretchingStatus(status) {
             const statusElement = document.getElementById("stretchingStatus");
-            statusElement.textContent = `وضع العرض: ${status}`;
+            statusElement.textContent = `Aspect Mode: ${status}`;
 
-            // إعادة تعيين الأنيميشن لإعادة التشغيل
+            // Reset animation to restart it
             statusElement.style.animation = 'none';
             statusElement.offsetHeight; // Trigger reflow
 
-            // fade in
+            // Fade in
             statusElement.style.display = "block";
             statusElement.style.animation = "fadeIn 0.5s forwards";
 
             setTimeout(() => {
-                // fade out
+                // Fade out
                 statusElement.style.animation = "fadeOut 0.5s forwards";
                 setTimeout(() => {
                     statusElement.style.display = "none";
-                }, 500); // انتظر حتى تنتهي الأنيميشن
-            }, 2500); // عرض الرسالة لمدة 2.5 ثانية
+                }, 500); // Wait for the animation to finish
+            }, 2500); // Display the message for 2.5 seconds
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -349,24 +345,24 @@
             const key = "5e1503f3398b34f5099933fedab847ef"; // المفتاح
 
             if (streamLink && keyId && key) {
-                setupPlayer(streamLink, keyId, key); // استدعاء الدالة مع رابط البث والمفتاح
+                setupPlayer(streamLink, keyId, key); // Call the function with the stream link and key
             } else {
-                console.error("❌ يرجى التأكد من توفير رابط البث والمفتاح");
+                console.error("❌ Please ensure the stream link and key are provided.");
             }
 
-            // مراقبة العنصر الذي يحتوي على كلمة "Live"
+            // Monitor the element containing "Live"
             const observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutation) {
                     const liveElement = document.querySelector('.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-text-live');
                     if (liveElement) {
                         liveElement.style.animation = 'fadeInOut 3s infinite';
                         liveElement.style.color = 'red';
-                        observer.disconnect(); // إيقاف المراقبة بعد العثور على العنصر
+                        observer.disconnect(); // Stop observing after finding the element
                     }
                 });
             });
 
-            // بدء مراقبة العنصر الرئيسي للمشغل
+            // Start observing the player container
             const playerContainer = document.getElementById('jwplayerDiv');
             if (playerContainer) {
                 observer.observe(playerContainer, {
@@ -374,7 +370,7 @@
                     subtree: true
                 });
             } else {
-                console.error("❌ لم يتم العثور على عنصر المشغل");
+                console.error("❌ Player container not found.");
             }
         });
     </script>
@@ -383,9 +379,9 @@
 <body>
     <div id="jwplayerDiv"></div>
     <div id="watermark">
-        <img src="https://i.postimg.cc/zv6SWzxx/animal.png" alt="موف">
+        <img src="https://i.postimg.cc/zv6SWzxx/animal.png" alt="Mof">
     </div>
-    <div id="overlayText" class="overlay-text">موف هذه البث خاص لتطبيق</div>
+    <div id="overlayText" class="overlay-text">This stream is exclusive to the Mof app.</div>
     <div id="stretchingStatus"></div>
 </body>
 <script>
@@ -394,7 +390,7 @@
     });
 
     document.addEventListener("mousedown", function (event) {
-        if (event.button === 2) { // زر الفأرة الأيمن
+        if (event.button === 2) { // Right mouse button
             event.preventDefault();
         }
     });
@@ -405,7 +401,7 @@
         }
     }, { passive: false });
 
-    // الانتظار حتى يتم تحميل المشغل ثم إخفاء قائمة النقر بزر الفأرة الأيمن
+    // Wait for the player to load and hide the right-click menu
     document.addEventListener("DOMContentLoaded", function () {
         const style = document.createElement("style");
         style.innerHTML = `
