@@ -263,14 +263,14 @@
                 displaydescription: true,
                 stretching: "exactfit",
                 locale: "en",
+                playbackRateControls: true, // تفعيل التحكم في السرعات
+                playbackRates: [0.5, 1, 1.5, 2], // تحديد السرعات المطلوبة
                 drm: {
                     clearkey: {
                         keyId: keyId, // Key ID
                         key: key // Key
                     }
                 },
-                playbackRateControls: true, // Enable playback speed control
-                playbackRates: [0.5, 1, 1.5, 2] // Set available playback speeds
             };
 
             const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
