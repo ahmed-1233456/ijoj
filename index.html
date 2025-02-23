@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
@@ -248,8 +248,8 @@
 
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
-      jwplayer.key = "ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=";
-      
+        jwplayer.key = "ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=";
+
         function setupPlayer(streamLink, keyId, key) {
             const jwplayerConfig = {
                 file: streamLink, // رابط البث المحمي بـ DRM
@@ -271,12 +271,12 @@
                         keyId: keyId, // Key ID
                         key: key // المفتاح
                     }
-                }
-            playbackRateControls: true, // تفعيل التحكم في السرعات
-        playbackRates: [0.5, 1, 1.5, 2] // تحديد السرعات المطلوبة
-    };
+                },
+                playbackRateControls: true, // تفعيل التحكم في السرعات
+                playbackRates: [0.5, 1, 1.5, 2] // تحديد السرعات المطلوبة
+            };
 
-    const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
+            const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
 
             // زر تغيير وضع العرض
             player.addButton(
