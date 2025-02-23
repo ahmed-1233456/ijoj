@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>موف</title>
+    <link rel="icon" href="https://i.postimg.cc/zv6SWzxx/animal.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- إضافة خط Cairo من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* تطبيق خط Cairo على الصفحة بالكامل */
+        body {
+            margin: 0;
+            background-color: black;
+            font-family: 'Cairo', sans-serif !important;
+        }
+
+        html,
+        body {
+            overflow: hidden !important;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* منع تكبير الصفحة */
+        * {
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* تطبيق خط Cairo على المشغل */
+        .jwplayer * {
+            font-family: 'Cairo', sans-serif !important;
+        }
+
+        .jwplayer {
+            position: absolute !important;
+        }
+
+        .jwplayer.jw-flag-aspect-mode {
+            min-height: 100%;
+            max-height: 100%;
+        }
+
+        #watermark {
+            position: fixed;
+            top: 2vh;
+            right: 4vw;
+            z-index: 999;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        #watermark img {
+            width: 10vw;
+            max-width: 80px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 20px;
+            font-size: 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1000;
+        }
+
+        /* أنيميشن للظهور (fade in) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* أنيميشن للاختفاء (fade out) */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        #stretchingStatus {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(26, 29, 46, 0.7);
+            color: white;
+            padding: 15px 20px;
+            font-size: 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1001;
+            backdrop-filter: blur(8px);
+            font-family: 'Cairo', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            opacity: 0;
+        }
+
+        /* أنيميشن لتأثير fade in و fade out */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* تخصيص كلمة "Live" */
+        .jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-text-live {
+            animation: fadeInOut 3s infinite !important;
+            color: red !important;
+        }
+
+        /* لون الأيقونات */
+        .jw-icon {
+            color: #3ADBBF !important;
+        }
+
+        /* تنسيق القوائم */
+        .jw-settings-menu,
+        .jw-menu {
+            background-color: rgba(26, 29, 46, 0.9) !important;
+            border-radius: 10px !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .jw-settings-menu .jw-option,
+        .jw-menu .jw-option {
+            color: #3ADBBF !important;
+            padding: 10px 15px !important;
+        }
+
+        .jw-settings-menu .jw-option:hover,
+        .jw-menu .jw-option:hover {
+            background-color: rgba(58, 219, 191, 0.1) !important;
+        }
+
+        /* إخفاء أيقونات غير مرغوبة */
+        .jw-icon-pip,
+        .jw-icon-fullscreen {
+            display: none !important;
+        }
+
+        /* شريط الصوت دائمًا أبيض */
+        .jw-slider-volume .jw-slider-container .jw-buffer {
+            background-color: white !important;
+        }
+
+        /* عند رفع الصوت (active)، يتم تغيير لون الجزء المملوء */
+        .jw-slider-volume.jw-volume-active .jw-slider-container .jw-progress {
+            background-color: #3ADBBF !important;
+        }
+
+        /* المؤشر يبقى دائمًا 3ADBBF */
+        .jw-slider-volume .jw-slider-container .jw-knob {
+            background-color: #3ADBBF !important;
+        }
+
+        /* تغيير لون الشريط المملوء في شريط التقدم */
+        .jw-slider-time .jw-slider-container .jw-timesegment-bar.jw-progress {
+            background-color: #3ADBBF !important;
+        }
+
+        /* تغيير لون المؤشر في شريط التقدم */
+        .jw-slider-time .jw-slider-container .jw-knob {
+            background-color: #3ADBBF !important;
+        }
+
+        /* تغيير لون خلفية زر الترجمة مع شفافية وبلور */
+        #jw-jwplayerDiv-settings-submenu-captions .jw-submenu-topbar .jw-settings-content-item {
+            background-color: rgba(26, 29, 46, 0.9) !important;
+            color: #3ADBBF !important;
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+        }
+
+        /* جعل النص باللون الأحمر */
+        .jw-settings-submenu-items .jw-settings-content-item.jw-settings-item-active {
+            color: #FF0000 !important;
+            position: relative;
+        }
+
+        /* تغيير لون الدائرة وتحريكها لليمين */
+        .jw-settings-submenu-items .jw-settings-content-item.jw-settings-item-active::before {
+            content: '';
+            background-color: #FF0000 !important;
+            border-radius: 50% !important;
+            width: 5px;
+            height: 5px;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 3px;
+        }
+
+        /* تخصيص حجم الخط للعنوان */
+        .jw-title {
+            font-size: 14px !important;
+        }
+
+        /* تخصيص حجم الخط للوصف */
+        .jw-description {
+            font-size: 18px !important;
+        }
+
+        /* محاذاة النص العربي إلى اليمين */
+        .jw-title[dir="rtl"],
+        .jw-description[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* محاذاة النص الإنجليزي إلى اليسار */
+        .jw-title[dir="ltr"],
+        .jw-description[dir="ltr"] {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+
+    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+    <script>
+      jwplayer.key = "ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=";
+      
+        function setupPlayer(streamLink, keyId, key) {
+            const jwplayerConfig = {
+                file: streamLink, // رابط البث المحمي بـ DRM
+                autostart: false,
+                width: "100%",
+                height: "100%",
+                type: "mpd", // استخدام DASH مع DRM
+                volume: 100,
+                mute: true,
+                pipIcon: false,
+                castIcon: false,
+                title: "موف",
+                displaytitle: true,
+                description: "هذا البث خاص بتطبيق موف",
+                displaydescription: true,
+                stretching: "exactfit",
+                drm: {
+                    clearkey: {
+                        keyId: keyId, // Key ID
+                        key: key // المفتاح
+                    }
+                }
+            playbackRateControls: true, // تفعيل التحكم في السرعات
+        playbackRates: [0.5, 1, 1.5, 2] // تحديد السرعات المطلوبة
+    };
+
+    const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
+
+            // زر تغيير وضع العرض
+            player.addButton(
+                "https://i.postimg.cc/yN9PVPGG/aspect-ratio.png",
+                "Change Aspect Ratio",
+                function () {
+                    const currentStretching = player.getConfig().stretching;
+                    let newStretching;
+
+                    if (currentStretching === "uniform") {
+                        newStretching = "fill";
+                    } else if (currentStretching === "fill") {
+                        newStretching = "exactfit";
+                    } else if (currentStretching === "exactfit") {
+                        newStretching = "none";
+                    } else {
+                        newStretching = "uniform";
+                    }
+
+                    player.setConfig({ stretching: newStretching });
+                    showStretchingStatus(newStretching);
+                },
+                "stretchingButton"
+            );
+
+            // تتبع تغييرات الصوت
+            player.on('volume', function (event) {
+                const volumeSlider = document.querySelector('.jw-slider-volume');
+                if (event.volume > 0) {
+                    volumeSlider.classList.add('jw-volume-active');
+                } else {
+                    volumeSlider.classList.remove('jw-volume-active');
+                }
+            });
+
+            // التحكم في وضع الشاشة الكاملة
+            player.on('fullscreen', function (event) {
+                const statusElement = document.getElementById("stretchingStatus");
+                statusElement.style.position = 'fixed';
+                statusElement.style.top = '50%';
+                statusElement.style.left = '50%';
+                statusElement.style.transform = 'translate(-50%, -50%)';
+            });
+        }
+
+        function showStretchingStatus(status) {
+            const statusElement = document.getElementById("stretchingStatus");
+            statusElement.textContent = `وضع العرض: ${status}`;
+
+            // إعادة تعيين الأنيميشن لإعادة التشغيل
+            statusElement.style.animation = 'none';
+            statusElement.offsetHeight; // Trigger reflow
+
+            // fade in
+            statusElement.style.display = "block";
+            statusElement.style.animation = "fadeIn 0.5s forwards";
+
+            setTimeout(() => {
+                // fade out
+                statusElement.style.animation = "fadeOut 0.5s forwards";
+                setTimeout(() => {
+                    statusElement.style.display = "none";
+                }, 500); // انتظر حتى تنتهي الأنيميشن
+            }, 2500); // عرض الرسالة لمدة 2.5 ثانية
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const streamLink = "https://4k-event2-new-25fps-enc.edgenextcdn.net/out/v1/c40564684d074b29a21efcf70725df3c/index.mpd"; // رابط البث المحمي بـ DRM
+            const keyId = "73efb1eb27294f8ea059765b368f411b"; // Key ID
+            const key = "8af553e93bc5b20e828a14a7643e0c59"; // المفتاح
+
+            if (streamLink && keyId && key) {
+                setupPlayer(streamLink, keyId, key); // استدعاء الدالة مع رابط البث والمفتاح
+            } else {
+                console.error("❌ يرجى التأكد من توفير رابط البث والمفتاح");
+            }
+
+            // مراقبة العنصر الذي يحتوي على كلمة "Live"
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    const liveElement = document.querySelector('.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-text-live');
+                    if (liveElement) {
+                        liveElement.style.animation = 'fadeInOut 3s infinite';
+                        liveElement.style.color = 'red';
+                        observer.disconnect(); // إيقاف المراقبة بعد العثور على العنصر
+                    }
+                });
+            });
+
+            // بدء مراقبة العنصر الرئيسي للمشغل
+            const playerContainer = document.getElementById('jwplayerDiv');
+            if (playerContainer) {
+                observer.observe(playerContainer, {
+                    childList: true,
+                    subtree: true
+                });
+            } else {
+                console.error("❌ لم يتم العثور على عنصر المشغل");
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="jwplayerDiv"></div>
+    <div id="watermark">
+        <img src="https://i.postimg.cc/zv6SWzxx/animal.png" alt="موف">
+    </div>
+    <div id="overlayText" class="overlay-text">موف هذه البث خاص لتطبيق</div>
+    <div id="stretchingStatus"></div>
+</body>
+<script>
+    document.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+    });
+
+    document.addEventListener("mousedown", function (event) {
+        if (event.button === 2) { // زر الفأرة الأيمن
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener("touchstart", function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+
+    // الانتظار حتى يتم تحميل المشغل ثم إخفاء قائمة النقر بزر الفأرة الأيمن
+    document.addEventListener("DOMContentLoaded", function () {
+        const style = document.createElement("style");
+        style.innerHTML = `
+            .jw-rightclick { display: none !important; }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+
+</html>
