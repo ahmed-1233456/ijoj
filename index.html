@@ -241,16 +241,17 @@
             text-align: left;
         }
         #thumbnailOverlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            display: none;
-            z-index: 999;
-        }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px); /* ترك مساحة لشريط التحكم */
+    background-size: cover;
+    background-position: center;
+    display: none;
+    z-index: 900; /* أقل من z-index لشريط التحكم */
+    pointer-events: none; /* لا يمنع النقر على العناصر الأخرى */
+}
 
         #thumbnailOverlay img {
             width: 100%;
