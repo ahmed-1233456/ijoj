@@ -240,10 +240,25 @@
             direction: ltr;
             text-align: left;
         }
+        #thumbnailOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: none;
+            z-index: 999;
+        }
+
+        #thumbnailOverlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
-    <div id="thumbnailOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; display: none; z-index: 999;">
-    <img src="https://png.pngtree.com/thumb_back/fh260/background/20230609/pngtree-big-cat-lion-portrait-wallpapers-image_2904842.jpg" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
-</div>
+  
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
         jwplayer.key = "ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=";
@@ -275,6 +290,23 @@
 };
 
             const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
+
+        const thumbnailOverlay = document.getElementById("thumbnailOverlay");
+
+        player.on('pause', function () {
+            console.log("Video paused");
+            thumbnailOverlay.style.display = "block";
+        });
+
+        player.on('play', function () {
+            console.log("Video playing");
+            thumbnailOverlay.style.display = "none";
+        });
+
+        player.on('complete', function () {
+            console.log("Video completed");
+            thumbnailOverlay.style.display = "block";
+        });
 
             // Button to change aspect ratio
             player.addButton(
@@ -380,6 +412,10 @@
 
 <body>
     <div id="jwplayerDiv"></div>
+     <div id="thumbnailOverlay">
+        <img src="https://example.com/path/to/your/thumbnail.jpg" alt="Thumbnail">
+    </div>
+
     <div id="watermark">
         <img src="https://i.postimg.cc/zv6SWzxx/animal.png" alt="Mof">
     </div>
@@ -411,24 +447,6 @@
         `;
         document.head.appendChild(style);
     });
-    document.addEventListener("DOMContentLoaded", function () {
-    const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
-
-    // ضع الكود هنا
-    const thumbnailOverlay = document.getElementById("thumbnailOverlay");
-
-    player.on('pause', function () {
-        thumbnailOverlay.style.display = "block"; // إظهار الصورة عند الإيقاف
-    });
-
-    player.on('play', function () {
-        thumbnailOverlay.style.display = "none"; // إخفاء الصورة عند التشغيل
-    });
-
-    player.on('complete', function () {
-        thumbnailOverlay.style.display = "block"; // إظهار الصورة عند انتهاء الفيديو
-    });
-});
 </script>
 
 </html>
