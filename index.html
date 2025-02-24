@@ -249,6 +249,7 @@
         function setupPlayer(streamLink, keyId, key) {
            const jwplayerConfig = {
     file: streamLink, // رابط البث المحمي بـ DRM
+    image: "https://me-static.beinstatic.com/shain/v1/dataservice/ResizeImage/$value?Format=%27jpg%27&Quality=85&ImageId=%274234514%27&EntityType=%27Item%27&EntityId=%27325849%27&Width=800&Height=450&ImageUrl=%274234514.png%27&device=%27web_browser%27&subscriptions=%27Subscriber%27&ResizeAction=%27fill%27&HorizontalAlignment=%27center%27&VerticalAlignment=%27top%27",           
     autostart: false,
     width: "100%",
     height: "100%",
@@ -263,8 +264,6 @@
     displaydescription: true,
     stretching: "exactfit",
     locale: "en", // تعيين لغة المشغل إلى الإنجليزية
-    playbackRateControls: true, // تفعيل التحكم في السرعات
-    playbackRates: [0.5, 1, 1.5, 2], // تحديد السرعات المطلوبة
     drm: {
         clearkey: {
             keyId: keyId, // Key ID
