@@ -247,31 +247,31 @@
         jwplayer.key = "ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=";
 
         function setupPlayer(streamLink, keyId, key) {
-            const jwplayerConfig = {
-                file: streamLink, // DRM-protected stream link
-                autostart: false,
-                width: "100%",
-                height: "100%",
-                type: "mpd", // Use DASH with DRM
-                volume: 100,
-                mute: true,
-                pipIcon: false,
-                castIcon: false,
-                title: "Mof",
-                displaytitle: true,
-                description: "This stream is exclusive to the Mof app.",
-                displaydescription: true,
-                stretching: "exactfit",
-                locale: "en",
-                playbackRateControls: true, // تفعيل التحكم في السرعات
-                playbackRates: [0.5, 1, 1.5, 2], // تحديد السرعات المطلوبة
-                drm: {
-                    clearkey: {
-                        keyId: keyId, // Key ID
-                        key: key // Key
-                    }
-                },
-            };
+           const jwplayerConfig = {
+    file: streamLink, // رابط البث المحمي بـ DRM
+    autostart: false,
+    width: "100%",
+    height: "100%",
+    type: "mpd", // استخدام DASH مع DRM
+    volume: 100,
+    mute: true,
+    pipIcon: false,
+    castIcon: false,
+    title: "Mof",
+    displaytitle: true,
+    description: "This stream is exclusive to the Mof app.",
+    displaydescription: true,
+    stretching: "exactfit",
+    locale: "en", // تعيين لغة المشغل إلى الإنجليزية
+    playbackRateControls: true, // تفعيل التحكم في السرعات
+    playbackRates: [0.5, 1, 1.5, 2], // تحديد السرعات المطلوبة
+    drm: {
+        clearkey: {
+            keyId: keyId, // Key ID
+            key: key // المفتاح
+        }
+    }
+};
 
             const player = jwplayer("jwplayerDiv").setup(jwplayerConfig);
 
